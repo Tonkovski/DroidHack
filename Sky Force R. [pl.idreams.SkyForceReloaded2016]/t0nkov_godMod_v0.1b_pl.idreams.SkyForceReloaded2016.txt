@@ -1,0 +1,33 @@
+[BEGIN]
+Patch for "Sky Force Reloaded".
+Version: 2.01(300222)
+
+Created by t0nkov.
+
+!!! Warning !!!
+- Intended for arm64-v8a devices.
+- Only confirmed working in the version mentioned above.
+- Only tested after tutorial.
+
+Patch Features:
+- Gains invincibility in game.
+
+[LIB-ARM64-V8A]
+{"name": "libil2cpp.so"}
+
+{"offset": "9CF1CC"}
+{"replaced": "20 00 80 52"}
+
+[END]
+Patch complete.
+
+
+
+Technical writeup:
+0x9CF1CC; bool __fastcall GameSettings__get_GodMode(const MethodInfo *method)
+GameSettings$$get_GodMode
+; __unwind {
+MOV             W0, WZR → 20008052
+RET
+
+

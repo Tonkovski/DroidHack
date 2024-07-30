@@ -1,0 +1,32 @@
+[BEGIN]
+Patch for "Sky Force".
+Version: 1.46(80)
+
+Created by t0nkov.
+
+!!! Warning !!!
+- Intended for arm64-v8a devices.
+- Only confirmed working in the version mentioned above.
+- Only tested after obtaining the first card.
+
+Patch Features:
+- Guaranteed card drop in each level after first enemy box destroyed.
+
+[LIB-ARM64-V8A]
+{"name": "libil2cpp.so"}
+
+{"original": "A0 04 00 36 A0 02 40 F9 16 DE 00 D0 D6 DA 41 F9"}
+{"replaced": "1F 20 03 D5 A0 02 40 F9 16 DE 00 D0 D6 DA 41 F9"}
+
+[END]
+Patch complete.
+
+
+
+Technical writeup:
+
+A61A70 ; EnemyBox__onDestroyed+90
+TBZ             W0, #0, loc_A7DB04
+↓
+NOP
+1F 20 03 D5

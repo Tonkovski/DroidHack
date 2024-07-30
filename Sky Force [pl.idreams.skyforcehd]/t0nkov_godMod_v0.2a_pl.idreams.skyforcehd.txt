@@ -1,0 +1,42 @@
+[BEGIN]
+Patch for "Sky Force".
+Version: 1.46(80)
+
+Created by t0nkov.
+
+!!! Warning !!!
+- Intended for arm64-v8a devices.
+- Only confirmed working in the version mentioned above.
+- Only tested after tutorial.
+
+Patch Features:
+- Immuinity to EMP missile in stage 5.
+- Invincibility in game.
+
+[LIB-ARM64-V8A]
+{"name": "libil2cpp.so"}
+
+{"original": "E0 03 14 AA E1 03 1F 2A E3 03 1F AA E0 0A FC 97"}
+{"replaced": "E0 03 14 AA 21 00 80 52 E3 03 1F AA E0 0A FC 97"}
+
+{"original": "C0 03 5F D6 C0 03 5F D6 E0 03 1F 2A C0 03 5F D6 C0 03 5F D6 F4 0F 1E F8 F3 7B 01 A9 34 EB 00 F0"}
+{"replaced": "C0 03 5F D6 C0 03 5F D6 20 00 80 52 C0 03 5F D6 C0 03 5F D6 F4 0F 1E F8 F3 7B 01 A9 34 EB 00 F0"}
+
+[END]
+Patch complete.
+
+
+
+Technical writeup:
+
+A6AD14 BulletMissileEMP__OnHit +1A0
+MOV             W1, WZR ; enable
+↓
+MOV             W1, #1
+21008052
+
+A8D938 ; bool __fastcall GameSettings__get_GodMode(const MethodInfo *method)
+GameSettings$$get_GodMode
+; __unwind {
+MOV             W0, WZR → 20008052
+RET

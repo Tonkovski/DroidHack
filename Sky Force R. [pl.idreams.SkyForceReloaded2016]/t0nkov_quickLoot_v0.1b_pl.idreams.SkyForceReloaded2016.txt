@@ -1,0 +1,37 @@
+[BEGIN]
+Patch for "Sky Force Reloaded".
+Version: 2.01(300222)
+
+Created by t0nkov.
+
+!!! Warning !!!
+- Intended for arm64-v8a devices.
+- Only confirmed working in the version mentioned above.
+- Only tested after obtaining the first card & the first aircraft part.
+
+Patch Features:
+- Increased card and part drop rate. 
+
+[LIB-ARM64-V8A]
+{"name": "libil2cpp.so"}
+
+{"original": "F7 5B 41 A9 E9 23 C4 6C C0 03 5F D6 08 29 29 1E"}
+{"replaced": "F7 5B 41 A9 E9 23 C4 6C C0 03 5F D6 08 10 2E 1E"}
+
+{"original": "69 AA 40 B9 6A F6 42 39 00 29 20 1E 01 10 2E 1E"}
+{"replaced": "69 AA 40 B9 6A F6 42 39 00 10 2E 1E 01 10 2E 1E"}
+
+[END]
+Patch complete.
+
+
+
+Technical writeup:
+
+0x99c94c: bool __fastcall CardsManager__CheckIfCanSpawnCard
+  v21 = fMinProb + ExtraCardLuckModificator;
+FADD S8, S8, S9 → FMOV S8, #1.0    08102E1E
+
+0xa7d3a8: bool __fastcall SkinsManager__CheckIfCanSpawnSkin
+  v13 = fMinProb + CardsManager__get_ExtraSkinLuckModificator(singleton, 0LL);
+FADD S0, S8, S0 → FMOV S0, #1.0    00102E1E

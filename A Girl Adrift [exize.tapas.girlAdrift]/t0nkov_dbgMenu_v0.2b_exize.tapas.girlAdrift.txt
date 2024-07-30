@@ -1,0 +1,33 @@
+[BEGIN]
+Patch for "A Girl Adrift".
+Version: 1.376(197)
+
+Created by t0nkov.
+
+!!! Warning !!!
+- Intended for arm64-v8a devices.
+- Only confirmed working in the version mentioned above.
+
+Patch Features:
+- Enables debug menu, AKA "godMod". After game start, tap the upper-left corner of the screen to toggle debug features.
+
+[LIB-ARM64-V8A]
+{"name": "libil2cpp.so"}
+
+{"original": "F3 7B BF A9 13 7B 00 D0 68 26 66 39 C8 00 00 37"}
+{"replaced": "20 00 80 52 C0 03 5F D6 68 26 66 39 C8 00 00 37"}
+
+[END]
+Patch complete.
+
+
+
+Technical writeup:
+
+// RVA: 0x18BBE9C Offset: 0x18BBE9C VA: 0x18BBE9C
+public bool get_isGodmod() { }
+↓
+MOV W0, #1
+RET
+20008052
+C0035FD6

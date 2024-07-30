@@ -1,0 +1,52 @@
+[BEGIN]
+Patch for "Dead Zed".
+Version: 1.3.11(524)
+
+Created by t0nkov.
+
+!!! Warning !!!
+- Intended for arm64-v8a devices.
+- Only confirmed working in the version mentioned above.
+- Only tested after tutorial.
+
+Patch Features:
+- Always judged as headshot when Zs get hit.
+- Infinite ammo.
+
+[LIB-ARM64-V8A]
+{"name": "libil2cpp.so"}
+
+{"original": "F3 03 00 AA 85 00 00 54 8A 12 40 BD 48 01 80 52"}
+{"replaced": "F3 03 00 AA 1F 20 03 D5 8A 12 40 BD 48 01 80 52"}
+
+{"original": "08 01 09 0B E0 03 1B AA E1 03 1F AA 68 EE 01 B9"}
+{"replaced": "1F 20 03 D5 E0 03 1B AA E1 03 1F AA 68 EE 01 B9"}
+
+{"original": "E0 03 14 AA 08 05 00 51 E1 03 1F AA 7F 12 06 39"}
+{"replaced": "E0 03 14 AA 1F 20 03 D5 E1 03 1F AA 7F 12 06 39"}
+
+[END]
+Patch complete.
+
+
+
+Technical writeup:
+
+ACF844: Enemy2D$$TakeDamage + 64
+if ( (float)(v12 + (float)((float)(hitColor.fields.b * hitColor.fields.b) + v11)) < 1.0e-10 )
+B.PL loc_ACF854
+↓
+1F2003D5
+
+B54310: Shotgun$$Shoot+1CC
+ADD W8,W8,W9
+↓
+NOP
+1F2003D5
+
+B571A4: Weapon$$Shoot+198
+SUB W8,W8,#1
+↓
+NOP
+1F2003D5
+

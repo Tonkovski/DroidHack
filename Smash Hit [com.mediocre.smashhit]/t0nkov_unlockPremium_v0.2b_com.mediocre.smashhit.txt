@@ -1,0 +1,35 @@
+[BEGIN]
+Patch for "Smash Hit".
+Version: 1.4.3(10403)
+
+Created by t0nkov.
+
+!!! Warning !!!
+- Intended for arm64-v8a devices.
+- Only confirmed working in the version mentioned above.
+
+Patch Features:
+- Hacks Premium IAP item. Use the "Restore Purchase" button to get Premium.
+
+[LIB-ARM64-V8A]
+{"name": "libsmashhit.so"}
+
+{"original": "A0 35 00 35 40 01 00 F0 09 00 67 9E 60 32 40 F9"}
+{"replaced": "1F 20 03 D5 40 01 00 F0 09 00 67 9E 60 32 40 F9"}
+
+[END]
+Patch complete.
+
+
+
+Technical writeup:
+
+Game::frame(Game *__hidden this)
+  if ( !strcmp(v123, "com.mediocre.smashhit.premium") )
+    Player::setPremium(*((Player **)this + 12), 1u);
+    
+offset 0x1E88E0
+CBNZ W0, loc_1E8F94
+↓
+NOP
+1F2003D5

@@ -1,0 +1,29 @@
+[BEGIN]
+Patch for "GOF2", i.e. "Galaxy on Fire 2™ HD".
+Version: 2.0.16 (47947032)
+Patch_version: 0.4
+
+Created by t0nkov.
+
+Bypass save file hash check, enables cross-device save transferring.
+
+Debug info：
+
+libgof2hdaa.so
+RecordHandler::checkHash(uint)	000CD7B0	
+	MOV R0, #0  
+	BX LR
+THUMB:
+4FF00000
+7047
+
+[LIB]
+{"name": "libgof2hdaa.so"}
+
+{"offset": "CD7B0"}
+{"replaced": "4F F0 01 00 70 47"}
+
+[END]
+Congratulations, GOF2 now supports alien save files located in /sdcard/Android/data/net.fishlabs.gof2hdallandroid2012/files/
+
+For InApp purchase features try LuckyPatcher's "Support patch for InApp and LVL emulation".
